@@ -1,4 +1,4 @@
-package com.connvertex.venus.configuration;
+package com.connvertex.candor.configuration;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 

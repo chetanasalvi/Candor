@@ -1,8 +1,8 @@
-package com.connvertex.venus.dao;
+package com.connvertex.candor.dao;
 
 import java.util.List;
 
-import com.connvertex.venus.model.Employee;
+import com.connvertex.candor.model.Employee;
  
 public interface EmployeeDao {
  

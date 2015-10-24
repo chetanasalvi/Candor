@@ -1,4 +1,4 @@
-package com.connvertex.venus.dao;
+package com.connvertex.candor.dao;
 
 import java.io.Serializable;
  

@@ -1,8 +1,8 @@
-package com.connvertex.venus.service;
+package com.connvertex.candor.service;
 
 import java.util.List;
 
-import com.connvertex.venus.model.Employee;
+import com.connvertex.candor.model.Employee;
  
 public interface EmployeeService {
  

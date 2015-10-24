@@ -2,11 +2,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.connvertex.venus</groupId>
-	<artifactId>venus</artifactId>
+	<groupId>com.connvertex.candor</groupId>
+	<artifactId>candor</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Venus Webapp</name>
+	<name>Candor Webapp</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -176,14 +176,14 @@
 					<version>2.4</version>
 					<configuration>
 						<warSourceDirectory>src/main/webapp</warSourceDirectory>
-						<warName>venus</warName>
+						<warName>candor</warName>
 						<failOnMissingWebXml>false</failOnMissingWebXml>
 					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
 
-		<finalName>venus</finalName>
+		<finalName>candor</finalName>
 	</build>
 
 </project>

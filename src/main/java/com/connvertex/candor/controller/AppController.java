@@ -1,4 +1,4 @@
-package com.connvertex.venus.controller;
+package com.connvertex.candor.controller;
 
 import java.util.List;
 import java.util.Locale;
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.connvertex.venus.model.Employee;
-import com.connvertex.venus.service.EmployeeService;
+import com.connvertex.candor.model.Employee;
+import com.connvertex.candor.service.EmployeeService;
 
 @Controller
 @RequestMapping("/")

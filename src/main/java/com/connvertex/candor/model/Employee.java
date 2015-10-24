@@ -1,4 +1,4 @@
-package com.connvertex.venus.model;
+package com.connvertex.candor.model;
 
 import java.math.BigDecimal;
 

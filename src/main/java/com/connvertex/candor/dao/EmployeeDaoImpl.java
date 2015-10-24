@@ -1,4 +1,4 @@
-package com.connvertex.venus.dao;
+package com.connvertex.candor.dao;
 
 import java.util.List;
  
@@ -7,7 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import com.connvertex.venus.model.Employee;
+import com.connvertex.candor.model.Employee;
  
 @Repository("employeeDao")
 public class EmployeeDaoImpl extends AbstractDao<Integer, Employee> implements EmployeeDao {
