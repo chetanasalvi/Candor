@@ -1,5 +1,7 @@
 #OS junk files
 [Tt]humbs.db
 *.DS_Store
-/WebContent
-/target/**
+!/WebContent
+/WebContent/*
+!/target
+/target/*
