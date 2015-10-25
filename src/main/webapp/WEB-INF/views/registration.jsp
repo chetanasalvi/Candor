@@ -18,7 +18,7 @@
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 
-	<title>Employee Registration Form</title>
+	<title>Person Registration Form</title>
 	
 	<style>
 		.error {
@@ -30,32 +30,43 @@
 
 <body>
 
-	<h2>Registration Form</h2>
+	<h2>Person Registration Form</h2>
 
-	<form:form method="POST" modelAttribute="employee">
-		<form:input type="hidden" path="id" id="id" />
+	<form:form method="POST" modelAttribute="person">
+		<form:input type="hidden" path="personID" id="personID" />
 		<table>
 			<tr>
-				<td><label for="name">Name: </label></td>
-				<td><form:input path="name" id="name" /></td>
-				<td><form:errors path="name" cssClass="error" /></td>
+				<td><label for="firstName">First Name: </label></td>
+				<td><form:input path="firstName" id="firstName" /></td>
+				<td><form:errors path="firstName" cssClass="error" /></td>
 			</tr>
 			<tr>
-				<td><label for="joiningDate">Joining Date: </label></td>
-				<td><form:input path="joiningDate" id="joiningDate" /></td>
-				<td><form:errors path="joiningDate" cssClass="error" /></td>
+				<td><label for="middleInitial">Middle Initial: </label></td>
+				<td><form:input path="middleInitial" id="middleInitial" /></td>
+				<td><form:errors path="middleInitial" cssClass="error" /></td>
 			</tr>
-
 			<tr>
-				<td><label for="salary">Salary: </label></td>
-				<td><form:input path="salary" id="salary" /></td>
-				<td><form:errors path="salary" cssClass="error" /></td>
+				<td><label for="lastName">Last Name: </label></td>
+				<td><form:input path="lastName" id="lastName" /></td>
+				<td><form:errors path="lastName" cssClass="error" /></td>
+			</tr>
+			
+			<tr>
+				<td><label for="birthDate">Birth Date: </label></td>
+				<td><form:input path="birthDate" id="birthDate" /></td>
+				<td><form:errors path="birthDate" cssClass="error" /></td>
 			</tr>
 
 			<tr>
 				<td><label for="ssn">SSN: </label></td>
 				<td><form:input path="ssn" id="ssn" /></td>
 				<td><form:errors path="ssn" cssClass="error" /></td>
+			</tr>
+			
+			<tr>
+				<td><label for="addressID">Address ID: </label></td>
+				<td><form:input path="addressID" id="addressID" /></td>
+				<td><form:errors path="addressID" cssClass="error" /></td>
 			</tr>
 
 			<tr>
@@ -71,8 +82,7 @@
 		</table>
 	</form:form>
 	<br />
-	<h2>{{ngname}}</h2>
 	<br /> Go back to
-	<a href="<c:url value='/list' />">List of All Employees</a>
+	<a href="<c:url value='/list' />">List of All Persons</a>
 </body>
 </html>

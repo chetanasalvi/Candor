@@ -1,17 +1,14 @@
 package com.connvertex.candor.model;
 
-import java.math.BigDecimal;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
- 
+
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.LocalDate;
@@ -22,73 +19,95 @@ import org.springframework.format.annotation.DateTimeFormat;
  * 
  * Database Schema
  * 
- * CREATE TABLE EMPLOYEE(
-   id INT NOT NULL auto_increment, 
-   name VARCHAR(50) NOT NULL,
-   joining_date DATE NOT NULL,
-   salary DOUBLE NOT NULL,
-   ssn VARCHAR(30) NOT NULL UNIQUE,
-   PRIMARY KEY (id));
+ * CREATE TABLE PERSON(
+   personID INT NOT NULL auto_increment, 
+   firstName VARCHAR(50) NOT NULL,
+   lastName VARCHAR(50) NOT NULL,
+   middle_initial VARCHAR(1),
+   birth_date DATE,
+   ssn VARCHAR(30),
+   addressID INT,
+   PRIMARY KEY (personID));
  *
  */
 
 @Entity
-@Table(name="EMPLOYEE")
-public class Employee {
+@Table(name="PERSON")
+public class Person {
  
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private int personID;
  
     @Size(min=3, max=50)
-    @Column(name = "NAME", nullable = false)
-    private String name;
+    @Column(name = "FIRSTNAME", nullable = false)
+    private String firstName;
  
+    @Size(min=3, max=50)
+    @Column(name = "LASTNAME", nullable = false)
+    private String lastName;
+    
+    @Size(min=0, max=1)
+    @Column(name = "MIDDLE_INITIAL")
+    private String middleInitial;
+    
     @NotNull
     @DateTimeFormat(pattern="dd/MM/yyyy") 
-    @Column(name = "JOINING_DATE", nullable = false)
+    @Column(name = "BIRTH_DATE", nullable = false)
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    private LocalDate joiningDate;
+    private LocalDate birthDate;
  
+    /*
     @NotNull
     @Digits(integer=8, fraction=2)
     @Column(name = "SALARY", nullable = false)
-    private BigDecimal salary;
+    private BigDecimal salary;*/
      
     @NotEmpty
     @Column(name = "SSN", unique=true, nullable = false)
     private String ssn;
+    
+    @Column(name = "ADDRESSID")
+    private int addressID;
  
-    public int getId() {
-        return id;
+    public int getPersonID() {
+        return personID;
     }
  
-    public void setId(int id) {
-        this.id = id;
+    public void setPersonID(int personID) {
+        this.personID = personID;
     }
  
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
  
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
  
-    public LocalDate getJoiningDate() {
-        return joiningDate;
+    public String getLastName() {
+        return lastName;
     }
  
-    public void setJoiningDate(LocalDate joiningDate) {
-        this.joiningDate = joiningDate;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getMiddleInitial() {
+        return middleInitial;
     }
  
-    public BigDecimal getSalary() {
-        return salary;
+    public void setMiddleInitial(String middleInitial) {
+        this.middleInitial = middleInitial;
+    }
+    
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
  
-    public void setSalary(BigDecimal salary) {
-        this.salary = salary;
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
  
     public String getSsn() {
@@ -98,12 +117,21 @@ public class Employee {
     public void setSsn(String ssn) {
         this.ssn = ssn;
     }
+    
+    public int getAddressID() {
+        return addressID;
+    }
+ 
+    public void setAddressID(int addressID) {
+        this.addressID = addressID;
+    }
+    
  
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + id;
+        result = prime * result + personID;
         result = prime * result + ((ssn == null) ? 0 : ssn.hashCode());
         return result;
     }
@@ -114,10 +142,10 @@ public class Employee {
             return true;
         if (obj == null)
             return false;
-        if (!(obj instanceof Employee))
+        if (!(obj instanceof Person))
             return false;
-        Employee other = (Employee) obj;
-        if (id != other.id)
+        Person other = (Person) obj;
+        if (personID != other.personID)
             return false;
         if (ssn == null) {
             if (other.ssn != null)
@@ -129,8 +157,9 @@ public class Employee {
  
     @Override
     public String toString() {
-        return "Employee [id=" + id + ", name=" + name + ", joiningDate="
-                + joiningDate + ", salary=" + salary + ", ssn=" + ssn + "]";
+        return "Person [personID=" + personID + ", firstName=" + firstName + ", lastName=" + lastName + 
+        		", middleInitial=" + middleInitial + ", birthDate=" + birthDate + ", ssn=" + ssn + 
+        		", addressID=" + addressID + "]";
     }
      
 }

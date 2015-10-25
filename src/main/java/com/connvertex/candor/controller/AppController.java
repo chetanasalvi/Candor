@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.connvertex.candor.model.Employee;
-import com.connvertex.candor.service.EmployeeService;
+import com.connvertex.candor.model.Person;
+import com.connvertex.candor.service.PersonService;
 
 @Controller
 @RequestMapping("/")
 public class AppController {
  
     @Autowired
-    EmployeeService service;
+    PersonService service;
      
     @Autowired
     MessageSource messageSource;
@@ -34,9 +34,9 @@ public class AppController {
     @RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET)
     public String listEmployees(ModelMap model) {
  
-        List<Employee> employees = service.findAllEmployees();
-        model.addAttribute("employees", employees);
-        return "allemployees";
+        List<Person> persons = service.findAllPersons();
+        model.addAttribute("persons", persons);
+        return "allpersons";
     }
  
     /*
@@ -44,8 +44,8 @@ public class AppController {
      */
     @RequestMapping(value = { "/new" }, method = RequestMethod.GET)
     public String newEmployee(ModelMap model) {
-        Employee employee = new Employee();
-        model.addAttribute("employee", employee);
+        Person person = new Person();
+        model.addAttribute("person", person);
         model.addAttribute("edit", false);
         return "registration";
     }
@@ -55,7 +55,7 @@ public class AppController {
      * saving employee in database. It also validates the user input
      */
     @RequestMapping(value = { "/new" }, method = RequestMethod.POST)
-    public String saveEmployee(@Valid Employee employee, BindingResult result,
+    public String saveEmployee(@Valid Person person, BindingResult result,
             ModelMap model) {
  
         if (result.hasErrors()) {
@@ -64,31 +64,36 @@ public class AppController {
  
         /*
          * Preferred way to achieve uniqueness of field [ssn] should be implementing custom @Unique annotation 
-         * and applying it on field [ssn] of Model class [Employee].
+         * and applying it on field [ssn] of Model class [Person].
          * 
          * Below mentioned peace of code [if block] is to demonstrate that you can fill custom errors outside the validation
          * framework as well while still using internationalized messages.
          * 
          */
-        if(!service.isEmployeeSsnUnique(employee.getId(), employee.getSsn())){
-            FieldError ssnError =new FieldError("employee","ssn",messageSource.getMessage("non.unique.ssn", new String[]{employee.getSsn()}, Locale.getDefault()));
+        if(!service.isPersonSsnUnique(person.getPersonID(), person.getSsn())){
+            FieldError ssnError = new FieldError("person","ssn", 
+            						messageSource.getMessage("non.unique.ssn", 
+            						new String[]{person.getSsn()}, Locale.getDefault()));
+            
             result.addError(ssnError);
             return "registration";
         }
         
-        service.saveEmployee(employee);
+        service.savePerson(person);
  
-        model.addAttribute("success", "Employee " + employee.getName() + " registered successfully");
+        model.addAttribute("success", "Person " + person.getFirstName() + " " 
+        					+ person.getMiddleInitial() + " " + person.getLastName()
+        					+ " registered successfully");
         return "success";
     }
  
     /*
      * This method will provide the medium to update an existing employee.
      */
-    @RequestMapping(value = { "/edit-{ssn}-employee" }, method = RequestMethod.GET)
+    @RequestMapping(value = { "/edit-{ssn}-person" }, method = RequestMethod.GET)
     public String editEmployee(@PathVariable String ssn, ModelMap model) {
-        Employee employee = service.findEmployeeBySsn(ssn);
-        model.addAttribute("employee", employee);
+        Person person = service.findPersonBySsn(ssn);
+        model.addAttribute("person", person);
         model.addAttribute("edit", true);
         return "registration";
     }
@@ -97,23 +102,25 @@ public class AppController {
      * This method will be called on form submission, handling POST request for
      * updating employee in database. It also validates the user input
      */
-    @RequestMapping(value = { "/edit-{ssn}-employee" }, method = RequestMethod.POST)
-    public String updateEmployee(@Valid Employee employee, BindingResult result,
+    @RequestMapping(value = { "/edit-{ssn}-person" }, method = RequestMethod.POST)
+    public String updateEmployee(@Valid Person person, BindingResult result,
             ModelMap model, @PathVariable String ssn) {
  
         if (result.hasErrors()) {
             return "registration";
         }
  
-        if(!service.isEmployeeSsnUnique(employee.getId(), employee.getSsn())){
-            FieldError ssnError =new FieldError("employee","ssn",messageSource.getMessage("non.unique.ssn", new String[]{employee.getSsn()}, Locale.getDefault()));
+        if(!service.isPersonSsnUnique(person.getPersonID(), person.getSsn())){
+            FieldError ssnError = new FieldError("person", "ssn", 
+            		messageSource.getMessage("non.unique.ssn", new String[]{person.getSsn()}, Locale.getDefault()));
             result.addError(ssnError);
             return "registration";
         }
  
-        service.updateEmployee(employee);
+        service.updatePerson(person);
  
-        model.addAttribute("success", "Employee " + employee.getName()  + " updated successfully");
+        model.addAttribute("success", "Person " + person.getFirstName() + " " + person.getMiddleInitial() 
+        					+ " " + person.getLastName() + " updated successfully");
         return "success";
     }
  
@@ -121,9 +128,9 @@ public class AppController {
     /*
      * This method will delete an employee by it's SSN value.
      */
-    @RequestMapping(value = { "/delete-{ssn}-employee" }, method = RequestMethod.GET)
+    @RequestMapping(value = { "/delete-{ssn}-person" }, method = RequestMethod.GET)
     public String deleteEmployee(@PathVariable String ssn) {
-        service.deleteEmployeeBySsn(ssn);
+        service.deletePersonBySsn(ssn);
         return "redirect:/list";
     }
  

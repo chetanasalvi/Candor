@@ -15,7 +15,7 @@
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 
-	<title>Connvertex</title>
+	<title>Connvertex-Candor</title>
 
 	<style>
 		tr:first-child {
@@ -27,27 +27,31 @@
 </head>
 
 <body>
-	<h2>List of Employees</h2>
+	<h2>List of Persons</h2>
 	<table>
 		<tr>
-			<td>NAME</td>
-			<td>Joining Date</td>
-			<td>Salary</td>
-			<td>SSN</td>
-			<td></td>
+			<td width="150">FIRST NAME</td>
+			<td width="50">MI</td>
+			<td width="150">LAST NAME</td>
+			<td width="150">Birth Date</td>
+			<td width="150">SSN</td>
+			<td width="150">ADDRESS ID</td>
+			<td width="150">Action</td>
 		</tr>
-		<c:forEach items="${employees}" var="employee">
+		<c:forEach items="${persons}" var="person">
 			<tr>
-				<td>${employee.name}</td>
-				<td>${employee.joiningDate}</td>
-				<td>${employee.salary}</td>
-				<td><a href="<c:url value='/edit-${employee.ssn}-employee' />">${employee.ssn}</a></td>
+				<td>${person.firstName}</td>
+				<td>${person.middleInitial}</td>
+				<td>${person.lastName}</td>
+				<td>${person.birthDate}</td>
+				<td><a href="<c:url value='/edit-${person.ssn}-person' />">${person.ssn}</a></td>
+				<td>${person.addressID}</td>
 				<td><a
-					href="<c:url value='/delete-${employee.ssn}-employee' />">delete</a></td>
+					href="<c:url value='/delete-${person.ssn}-person' />">delete</a></td>
 			</tr>
 		</c:forEach>
 	</table>
 	<br />
-	<a href="<c:url value='/new' />">Add New Employee</a>
+	<a href="<c:url value='/new' />">Add New Person</a>
 </body>
 </html>

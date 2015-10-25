@@ -22,19 +22,19 @@ import org.springframework.format.annotation.DateTimeFormat;
  * 
  * Database Schema
  * 
- * CREATE TABLE EMPLOYEE(
-   id INT NOT NULL auto_increment, 
-   name VARCHAR(50) NOT NULL,
-   joining_date DATE NOT NULL,
+ * CREATE TABLE PERSON(
+   instructorID INT NOT NULL auto_increment, 
+   personID INT NOT NULL,
+   from_date DATE NOT NULL,
+   to_date DATE NOT NULL,
    salary DOUBLE NOT NULL,
-   ssn VARCHAR(30) NOT NULL UNIQUE,
-   PRIMARY KEY (id));
+   PRIMARY KEY (instructorID));
  *
  */
 
 @Entity
-@Table(name="EMPLOYEE")
-public class Employee {
+@Table(name="PERSON")
+public class Instructor {
  
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -46,9 +46,9 @@ public class Employee {
  
     @NotNull
     @DateTimeFormat(pattern="dd/MM/yyyy") 
-    @Column(name = "JOINING_DATE", nullable = false)
+    @Column(name = "BIRTH_DATE", nullable = false)
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    private LocalDate joiningDate;
+    private LocalDate birthDate;
  
     @NotNull
     @Digits(integer=8, fraction=2)
@@ -76,11 +76,11 @@ public class Employee {
     }
  
     public LocalDate getJoiningDate() {
-        return joiningDate;
+        return birthDate;
     }
  
-    public void setJoiningDate(LocalDate joiningDate) {
-        this.joiningDate = joiningDate;
+    public void setJoiningDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
  
     public BigDecimal getSalary() {
@@ -114,9 +114,9 @@ public class Employee {
             return true;
         if (obj == null)
             return false;
-        if (!(obj instanceof Employee))
+        if (!(obj instanceof Instructor))
             return false;
-        Employee other = (Employee) obj;
+        Instructor other = (Instructor) obj;
         if (id != other.id)
             return false;
         if (ssn == null) {
@@ -129,8 +129,8 @@ public class Employee {
  
     @Override
     public String toString() {
-        return "Employee [id=" + id + ", name=" + name + ", joiningDate="
-                + joiningDate + ", salary=" + salary + ", ssn=" + ssn + "]";
+        return "Person [id=" + id + ", name=" + name + ", birthDate="
+                + birthDate + ", salary=" + salary + ", ssn=" + ssn + "]";
     }
      
 }
