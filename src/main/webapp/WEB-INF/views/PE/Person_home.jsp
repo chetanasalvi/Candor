@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!doctype html>
 <html ng-app>
+
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<script type="text/javascript"
@@ -15,43 +18,51 @@
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 
-	<title>Connvertex-Candor</title>
-
+	<title>Person Registration Form</title>
+	
 	<style>
-		tr:first-child {
-			font-weight: bold;
-			background-color: #C6C9C4;
+		.error {
+			color: #ff0000;
 		}
 	</style>
 
 </head>
 
 <body>
-	<h2>List of Persons</h2>
-	<table>
-		<tr>
-			<td width="150">FIRST NAME</td>
-			<td width="50">MI</td>
-			<td width="150">LAST NAME</td>
-			<td width="150">Birth Date</td>
-			<td width="150">SSN</td>
-			<td width="150">ADDRESS ID</td>
-			<td width="150">Action</td>
-		</tr>
-		<c:forEach items="${persons}" var="person">
+
+	<h2>Person Details</h2>
+
+	<form:form method="POST" modelAttribute="person">
+		<form:input type="hidden" path="personID" id="personID" />
+		<table>
 			<tr>
-				<td>${person.firstName}</td>
-				<td>${person.middleInitial}</td>
-				<td>${person.lastName}</td>
-				<td>${person.birthDate}</td>
-				<td><a href="<c:url value='/edit-${person.ssn}-person' />">${person.ssn}</a></td>
-				<td>${person.addressID}</td>
-				<td><a
-					href="<c:url value='/delete-${person.ssn}-person' />">delete</a></td>
+				<td>Full Name: </td>
+				<td>${person.firstName} ${person.middleInitial} ${person.lastName}</td>
 			</tr>
-		</c:forEach>
-	</table>
+			<tr>
+				<td>Birth Date: </td>
+				<td>${person.birthDate}</td>
+			</tr>
+
+			<tr>
+				<td>SSN: </td>
+				<td>${person.ssn}</td>
+			</tr>
+			
+			<tr>
+				<td>Address: </td>
+				<td>${person.addressID}</td>
+			</tr>
+
+			<tr>
+				<td colspan="3">
+					<a href="<c:url value='/editPerson-${person.ssn}' />">Update</a>
+				</td>
+			</tr>
+		</table>
+	</form:form>
 	<br />
-	<a href="<c:url value='/new' />">Add New Person</a>
+	<br /> Go back to
+	<a href="<c:url value='/personList' />"> Person List </a>
 </body>
 </html>

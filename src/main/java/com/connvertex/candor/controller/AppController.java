@@ -2,9 +2,9 @@ package com.connvertex.candor.controller;
 
 import java.util.List;
 import java.util.Locale;
- 
+
 import javax.validation.Valid;
- 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.connvertex.candor.model.Address;
 import com.connvertex.candor.model.Person;
 import com.connvertex.candor.service.PersonService;
 
@@ -29,37 +30,50 @@ public class AppController {
     MessageSource messageSource;
  
     /*
-     * This method will list all existing employees.
+     * This method will list all existing persons.
      */
-    @RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET)
-    public String listEmployees(ModelMap model) {
+    @RequestMapping(value = { "/","/personList" }, method = RequestMethod.GET)
+    public String listPersons(ModelMap model) {
  
         List<Person> persons = service.findAllPersons();
         model.addAttribute("persons", persons);
-        return "allpersons";
+        return "/PE/Person_list";
     }
  
     /*
-     * This method will provide the medium to add a new employee.
+     * This method will provide the medium to add a new person.
      */
-    @RequestMapping(value = { "/new" }, method = RequestMethod.GET)
-    public String newEmployee(ModelMap model) {
+    @RequestMapping(value = { "/personRegistration" }, method = RequestMethod.GET)
+    public String newPerson(ModelMap model) {
         Person person = new Person();
+        Address address = new Address();
+        
         model.addAttribute("person", person);
+        model.addAttribute("address", address);
         model.addAttribute("edit", false);
-        return "registration";
+        return "/PE/Person_registration";
     }
- 
+    
+    /*
+     * This method will provide the medium to view an existing person.
+     */
+    @RequestMapping(value = { "/viewPerson-{ssn}" }, method = RequestMethod.GET)
+    public String viewPerson(@PathVariable String ssn, ModelMap model) {
+        Person person = service.findPersonBySsn(ssn);
+        model.addAttribute("person", person);
+        return "/PE/Person_home";
+    }
+    
     /*
      * This method will be called on form submission, handling POST request for
-     * saving employee in database. It also validates the user input
+     * saving person in database. It also validates the user input
      */
-    @RequestMapping(value = { "/new" }, method = RequestMethod.POST)
-    public String saveEmployee(@Valid Person person, BindingResult result,
+    @RequestMapping(value = { "/personRegistration" }, method = RequestMethod.POST)
+    public String savePerson(@Valid Person person, BindingResult result,
             ModelMap model) {
  
         if (result.hasErrors()) {
-            return "registration";
+            return "/PE/Person_registration";
         }
  
         /*
@@ -76,62 +90,61 @@ public class AppController {
             						new String[]{person.getSsn()}, Locale.getDefault()));
             
             result.addError(ssnError);
-            return "registration";
+            return "/PE/Person_registration";
         }
         
         service.savePerson(person);
  
-        model.addAttribute("success", "Person " + person.getFirstName() + " " 
+        model.addAttribute("Person_registrationSuccess_message", "Person " + person.getFirstName() + " " 
         					+ person.getMiddleInitial() + " " + person.getLastName()
         					+ " registered successfully");
-        return "success";
+        return "/PE/Person_registrationSuccess";
     }
  
     /*
-     * This method will provide the medium to update an existing employee.
+     * This method will provide the medium to update an existing person.
      */
-    @RequestMapping(value = { "/edit-{ssn}-person" }, method = RequestMethod.GET)
-    public String editEmployee(@PathVariable String ssn, ModelMap model) {
+    @RequestMapping(value = { "/editPerson-{ssn}" }, method = RequestMethod.GET)
+    public String editPerson(@PathVariable String ssn, ModelMap model) {
         Person person = service.findPersonBySsn(ssn);
         model.addAttribute("person", person);
         model.addAttribute("edit", true);
-        return "registration";
+        return "/PE/Person_registration";
     }
      
     /*
      * This method will be called on form submission, handling POST request for
-     * updating employee in database. It also validates the user input
+     * updating person in database. It also validates the user input
      */
-    @RequestMapping(value = { "/edit-{ssn}-person" }, method = RequestMethod.POST)
-    public String updateEmployee(@Valid Person person, BindingResult result,
+    @RequestMapping(value = { "/editPerson-{ssn}" }, method = RequestMethod.POST)
+    public String updatePerson(@Valid Person person, BindingResult result,
             ModelMap model, @PathVariable String ssn) {
  
         if (result.hasErrors()) {
-            return "registration";
+            return "/PE/Person_registration";
         }
  
         if(!service.isPersonSsnUnique(person.getPersonID(), person.getSsn())){
             FieldError ssnError = new FieldError("person", "ssn", 
             		messageSource.getMessage("non.unique.ssn", new String[]{person.getSsn()}, Locale.getDefault()));
             result.addError(ssnError);
-            return "registration";
+            return "/PE/Person_registration";
         }
  
         service.updatePerson(person);
  
-        model.addAttribute("success", "Person " + person.getFirstName() + " " + person.getMiddleInitial() 
+        model.addAttribute("Person_registrationSuccess_message", "Person " + person.getFirstName() + " " + person.getMiddleInitial() 
         					+ " " + person.getLastName() + " updated successfully");
-        return "success";
+        return "/PE/Person_registrationSuccess";
     }
- 
      
     /*
-     * This method will delete an employee by it's SSN value.
+     * This method will delete an person by it's SSN value.
      */
-    @RequestMapping(value = { "/delete-{ssn}-person" }, method = RequestMethod.GET)
-    public String deleteEmployee(@PathVariable String ssn) {
+    @RequestMapping(value = { "/deletePerson-{ssn}" }, method = RequestMethod.GET)
+    public String deletePerson(@PathVariable String ssn) {
         service.deletePersonBySsn(ssn);
-        return "redirect:/list";
+        return "redirect:/personList";
     }
  
 }

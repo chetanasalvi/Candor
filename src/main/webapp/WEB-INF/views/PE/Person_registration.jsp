@@ -30,7 +30,16 @@
 
 <body>
 
-	<h2>Person Registration Form</h2>
+	<h2>
+		<c:choose>
+			<c:when test="${edit}">
+				Update Person Form
+			</c:when>
+			<c:otherwise>
+				Person Registration Form
+			</c:otherwise>
+		</c:choose>
+	</h2>
 
 	<form:form method="POST" modelAttribute="person">
 		<form:input type="hidden" path="personID" id="personID" />
@@ -63,26 +72,29 @@
 				<td><form:errors path="ssn" cssClass="error" /></td>
 			</tr>
 			
+			<!-- 
 			<tr>
 				<td><label for="addressID">Address ID: </label></td>
 				<td><form:input path="addressID" id="addressID" /></td>
 				<td><form:errors path="addressID" cssClass="error" /></td>
-			</tr>
+			</tr>-->
 
 			<tr>
-				<td colspan="3"><c:choose>
+				<td colspan="3">
+					<c:choose>
 						<c:when test="${edit}">
 							<input type="submit" value="Update" />
 						</c:when>
 						<c:otherwise>
 							<input type="submit" value="Register" />
 						</c:otherwise>
-					</c:choose></td>
+					</c:choose>
+				</td>
 			</tr>
 		</table>
 	</form:form>
 	<br />
 	<br /> Go back to
-	<a href="<c:url value='/list' />">List of All Persons</a>
+	<a href="<c:url value='/personList' />"> Person List </a>
 </body>
 </html>

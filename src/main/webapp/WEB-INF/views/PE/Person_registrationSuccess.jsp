@@ -18,10 +18,11 @@
 	<title>Registration Confirmation Page</title>
 </head>
 <body>
-	message : ${success}
+	<br />
+	<b>${Person_registrationSuccess_message}</b>
 	<br />
 	<br /> Go back to
-	<a href="<c:url value='/list' />">List of All Persons</a>
+	<a href="<c:url value='/personList' />"> Persons List </a>
 
 </body>
 

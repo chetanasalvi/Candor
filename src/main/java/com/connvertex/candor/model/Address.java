@@ -1,21 +1,14 @@
 package com.connvertex.candor.model;
 
-import java.math.BigDecimal;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
- 
-import org.hibernate.annotations.Type;
+
 import org.hibernate.validator.constraints.NotEmpty;
-import org.joda.time.LocalDate;
-import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * @author mahesh
@@ -25,8 +18,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  * CREATE TABLE ADDRESS(
    addressID INT NOT NULL auto_increment, 
    addressLineOne VARCHAR(50) NOT NULL,
-   addressLineTwo VARCHAR(50) NOT NULL,
-   addressLineThree VARCHAR(50) NOT NULL,
+   addressLineTwo VARCHAR(50),
+   addressLineThree VARCHAR(50),
    city VARCHAR(50) NOT NULL,
    state VARCHAR(20) NOT NULL,
    zipCode VARCHAR(10) NOT NULL,
@@ -38,102 +31,141 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name="ADDRESS")
 public class Address {
- 
-    @Id
+
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private int addressID;
+ 
+    @NotEmpty
+    @Size(min=3, max=50)
+    @Column(name = "addressLineOne", nullable = false)
+    private String addressLineOne;
  
     @Size(min=3, max=50)
-    @Column(name = "NAME", nullable = false)
-    private String name;
- 
-    @NotNull
-    @DateTimeFormat(pattern="dd/MM/yyyy") 
-    @Column(name = "JOINING_DATE", nullable = false)
-    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    private LocalDate joiningDate;
- 
-    @NotNull
-    @Digits(integer=8, fraction=2)
-    @Column(name = "SALARY", nullable = false)
-    private BigDecimal salary;
-     
+    @Column(name = "addressLineTwo")
+    private String addressLineTwo;
+    
+    @Size(min=3, max=50)
+    @Column(name = "addressLineThree")
+    private String addressLineThree;
+    
     @NotEmpty
-    @Column(name = "SSN", unique=true, nullable = false)
-    private String ssn;
+    @Size(min=3, max=50)
+    @Column(name = "city", nullable = false)
+    private String city;
  
-    public int getId() {
-        return id;
+    @NotEmpty
+    @Size(min=3, max=20)
+    @Column(name = "state", nullable = false)
+    private String state;
+    
+    @NotEmpty
+    @Size(min=3, max=10)
+    @Column(name = "zipCode", nullable = false)
+    private String zipCode;
+    
+    @NotEmpty
+    @Size(min=3, max=10)
+    @Column(name = "status", nullable = false)
+    private String status;
+    
+    public int getAddressID() {
+        return addressID;
     }
  
-    public void setId(int id) {
-        this.id = id;
+    public void setAddressID(int addressID) {
+        this.addressID = addressID;
     }
  
-    public String getName() {
-        return name;
+    public String getAddressLineOne() {
+        return addressLineOne;
     }
  
-    public void setName(String name) {
-        this.name = name;
+    public void setAddressLineOne(String addressLineOne) {
+        this.addressLineOne = addressLineOne;
+    }
+    
+    public String getAddressLineTwo() {
+        return addressLineTwo;
     }
  
-    public LocalDate getJoiningDate() {
-        return joiningDate;
+    public void setAddressLineTwo(String addressLineTwo) {
+        this.addressLineTwo = addressLineTwo;
+    }
+    
+    public String getAddressLineThree() {
+        return addressLineThree;
     }
  
-    public void setJoiningDate(LocalDate joiningDate) {
-        this.joiningDate = joiningDate;
+    public void setAddressLineThree(String addressLineThree) {
+        this.addressLineThree = addressLineThree;
+    }
+    
+    public String getCity() {
+        return city;
     }
  
-    public BigDecimal getSalary() {
-        return salary;
+    public void setCity(String city) {
+        this.city = city;
+    }
+    
+    public String getState() {
+        return state;
     }
  
-    public void setSalary(BigDecimal salary) {
-        this.salary = salary;
+    public void setState(String state) {
+        this.state = state;
+    }
+    
+    public String getZipCode() {
+        return zipCode;
     }
  
-    public String getSsn() {
-        return ssn;
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
  
-    public void setSsn(String ssn) {
-        this.ssn = ssn;
-    }
- 
+    public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+    
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + id;
-        result = prime * result + ((ssn == null) ? 0 : ssn.hashCode());
+        result = prime * result + addressID;
         return result;
     }
  
     @Override
     public boolean equals(Object obj) {
+    	
         if (this == obj)
             return true;
+        
         if (obj == null)
             return false;
+        
         if (!(obj instanceof Address))
             return false;
+        
         Address other = (Address) obj;
-        if (id != other.id)
+        if (addressID != other.addressID)
             return false;
-        if (ssn == null) {
-            if (other.ssn != null)
-                return false;
-        } else if (!ssn.equals(other.ssn))
-            return false;
+
         return true;
     }
  
     @Override
     public String toString() {
-        return "Facility [id=" + id + ", name=" + name + ", joiningDate="
-                + joiningDate + ", salary=" + salary + ", ssn=" + ssn + "]";
+        return "Address [addressID=" + addressID + ", addressLineOne=" + addressLineOne 
+        		+ ", addressLineTwo=" + addressLineTwo + ", addressLineThree=" + addressLineThree 
+                + ", city=" + city + ", state=" + state + ", zipCode=" + zipCode 
+                + ", status=" + status + "]";
     }
      
 }
