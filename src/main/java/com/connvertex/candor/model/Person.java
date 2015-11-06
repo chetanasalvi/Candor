@@ -37,18 +37,22 @@ public class Person {
  
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
     private int personID;
  
     @Size(min=3, max=50)
     @Column(name = "FIRSTNAME", nullable = false)
+    @NotEmpty
     private String firstName;
  
     @Size(min=3, max=50)
     @Column(name = "LASTNAME", nullable = false)
+    @NotEmpty
     private String lastName;
     
     @Size(min=0, max=1)
     @Column(name = "MIDDLE_INITIAL")
+    @NotEmpty
     private String middleInitial;
     
     @NotNull

@@ -2,35 +2,35 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!doctype html>
 <html ng-app>
 
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<script type="text/javascript"
-		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+<script type="text/javascript"
+	src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<!-- Optional theme -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 
-	<script type="text/javascript"
-		src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
-	
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-
-	<title>Person Registration Form</title>
-	
-	<style>
-		.error {
-			color: #ff0000;
-		}
-	</style>
-
+<title>Person Registration</title>
+<style>
+label {
+	display: inline-block;
+	width: 600px;
+	text-align: right;
+}
+</style>
 </head>
 
 <body>
-
-	<h2>
+	<h3 align="center" style="color: #6F9EC3">
 		<c:choose>
 			<c:when test="${edit}">
 				Update Person Form
@@ -39,62 +39,122 @@
 				Person Registration Form
 			</c:otherwise>
 		</c:choose>
-	</h2>
-
-	<form:form method="POST" modelAttribute="person">
-		<form:input type="hidden" path="personID" id="personID" />
-		<table>
-			<tr>
-				<td><label for="firstName">First Name: </label></td>
-				<td><form:input path="firstName" id="firstName" /></td>
-				<td><form:errors path="firstName" cssClass="error" /></td>
-			</tr>
-			<tr>
-				<td><label for="middleInitial">Middle Initial: </label></td>
-				<td><form:input path="middleInitial" id="middleInitial" /></td>
-				<td><form:errors path="middleInitial" cssClass="error" /></td>
-			</tr>
-			<tr>
-				<td><label for="lastName">Last Name: </label></td>
-				<td><form:input path="lastName" id="lastName" /></td>
-				<td><form:errors path="lastName" cssClass="error" /></td>
-			</tr>
-			
-			<tr>
-				<td><label for="birthDate">Birth Date: </label></td>
-				<td><form:input path="birthDate" id="birthDate" /></td>
-				<td><form:errors path="birthDate" cssClass="error" /></td>
-			</tr>
-
-			<tr>
-				<td><label for="ssn">SSN: </label></td>
-				<td><form:input path="ssn" id="ssn" /></td>
-				<td><form:errors path="ssn" cssClass="error" /></td>
-			</tr>
-			
-			<!-- 
-			<tr>
-				<td><label for="addressID">Address ID: </label></td>
-				<td><form:input path="addressID" id="addressID" /></td>
-				<td><form:errors path="addressID" cssClass="error" /></td>
-			</tr>-->
-
-			<tr>
-				<td colspan="3">
-					<c:choose>
-						<c:when test="${edit}">
-							<input type="submit" value="Update" />
-						</c:when>
-						<c:otherwise>
-							<input type="submit" value="Register" />
-						</c:otherwise>
-					</c:choose>
-				</td>
-			</tr>
-		</table>
-	</form:form>
+	</h3>
 	<br />
-	<br /> Go back to
-	<a href="<c:url value='/personList' />"> Person List </a>
+
+	<form action="" method="post">
+		<spring:bind path="person.firstName">
+			<label for="firstName">First Name : </label>
+			<input type="text" name="${status.expression}"
+				value="${status.value}">
+			<span class="fieldError" style="color: red">${status.errorMessage}</span>
+			<br />
+		</spring:bind>
+
+		<spring:bind path="person.middleInitial">
+			<label for="middleInitial">Middle Initial : </label>
+			<input type="text" name="${status.expression}"
+				value="${status.value}">
+			<span class="fieldError" style="color: red">${status.errorMessage}</span>
+			<br />
+		</spring:bind>
+
+		<spring:bind path="person.lastName">
+			<label for="lastName">Last Name : </label>
+			<input type="text" name="${status.expression}"
+				value="${status.value}">
+			<span class="fieldError" style="color: red">${status.errorMessage}</span>
+			<br />
+		</spring:bind>
+
+		<spring:bind path="person.birthDate">
+			<label for="birthDate">Birth Date : </label>
+			<input type="text" name="${status.expression}"
+				value="${status.value}">
+			<span class="fieldError" style="color: red">${status.errorMessage}</span>
+			<br />
+		</spring:bind>
+
+		<spring:bind path="person.ssn">
+			<label for="ssn">SSN : </label>
+			<input type="text" name="${status.expression}"
+				value="${status.value}">
+			<span class="fieldError" style="color: red">${status.errorMessage}</span>
+			<br />
+		</spring:bind>
+
+		<spring:bind path="address.addressLineOne">
+			<label for="addressLineOne">House No : </label>
+			<input type="text" name="${status.expression}"
+				value="${status.value}">
+			<span class="fieldError" style="color: red">${status.errorMessage}</span>
+			<br />
+		</spring:bind>
+
+		<spring:bind path="address.addressLineTwo">
+			<label for="addressLineTwo">Apt Name : </label>
+			<input type="text" name="${status.expression}"
+				value="${status.value}">
+			<span class="fieldError" style="color: red">${status.errorMessage}</span>
+			<br />
+		</spring:bind>
+
+		<spring:bind path="address.addressLineThree">
+			<label for="addressLineThree">Street Name : </label>
+			<input type="text" name="${status.expression}"
+				value="${status.value}">
+			<span class="fieldError" style="color: red">${status.errorMessage}</span>
+			<br />
+		</spring:bind>
+
+		<spring:bind path="address.city">
+			<label for="city">City : </label>
+			<input type="text" name="${status.expression}"
+				value="${status.value}">
+			<span class="fieldError" style="color: red">${status.errorMessage}</span>
+			<br />
+		</spring:bind>
+
+		<spring:bind path="address.state">
+			<label for="state">State : </label>
+			<input type="text" name="${status.expression}"
+				value="${status.value}">
+			<span class="fieldError" style="color: red">${status.errorMessage}</span>
+			<br />
+		</spring:bind>
+
+		<spring:bind path="address.zipCode">
+			<label for="zipCode">Zipcode : </label>
+			<input type="text" name="${status.expression}"
+				value="${status.value}">
+			<span class="fieldError" style="color: red">${status.errorMessage}</span>
+			<br />
+		</spring:bind>
+
+		<spring:bind path="address.status">
+			<label for="status">Status : </label>
+			<input type="text" name="${status.expression}"
+				value="${status.value}">
+			<span class="fieldError" style="color: red">${status.errorMessage}</span>
+			<br />
+		</spring:bind>
+
+		<c:choose>
+			<c:when test="${edit}">
+				<input type="submit" value="Update"
+					style="position: relative; top: 25px; left: 50%;" />
+			</c:when>
+			<c:otherwise>
+				<input type="submit" value="Register"
+					style="position: relative; top: 25px; left: 50%;" />
+			</c:otherwise>
+		</c:choose>
+	</form>
+
+	<br />
+	<br />
+	<h4 align="center">
+		Go back to <a href="<c:url value='/personList' />"> Person List </a>
+	</h4>
 </body>
 </html>
