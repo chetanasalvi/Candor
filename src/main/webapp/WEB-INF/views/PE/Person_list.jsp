@@ -6,10 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script type="text/javascript"
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
-
 <script type="text/javascript"
 	src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
-
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -25,11 +23,10 @@ tr:first-child {
 	background-color: #C6C9C4;
 }
 </style>
-
 </head>
 
 <body>
-	<h3 align="center" style="color:#6F9EC3">List of Persons</h3>
+	<h3 align="center" style="color: #6F9EC3">List of Persons</h3>
 	<table align="center" border="1">
 		<tr>
 			<td width="150" align="center">FIRST NAME</td>
@@ -42,7 +39,7 @@ tr:first-child {
 		</tr>
 		<c:forEach items="${persons}" var="person">
 			<tr>
-				<td >${person.firstName}</td>
+				<td>${person.firstName}</td>
 				<td>${person.middleInitial}</td>
 				<td>${person.lastName}</td>
 				<td>${person.birthDate}</td>
